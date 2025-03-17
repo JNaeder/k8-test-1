@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from datetime import datetime
 
 app = FastAPI()
 
@@ -14,12 +15,11 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"status": "online"}
-
-@app.get("/api")
-async def api():
+    todayDate = datetime.now()
+    print(todayDate)
     return {
-        "data": "123"
-    }
+        "status": "online",
+        "time": todayDate
+        }
 
 
