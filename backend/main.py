@@ -20,6 +20,6 @@ async def root():
     return {
         "status": "online",
         "time": todayDate
-        }
+    }
 
 
