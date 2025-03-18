@@ -52,6 +52,17 @@ resource "google_compute_instance" "web-test" {
     }
   }
 
+  metadata_startup_script = <<-EOT
+    #! /bin/bash
+    sudo apt-get update
+    sudo apt-get install -y docker.io git
+    sudo systemctl enable --now docker
+  EOT
+
+  metadata = {
+    "ssh-keys" = "j_naeder324:${file("~/.ssh/gcp-ssh-key.pub")}"
+  }
+
   network_interface {
     network = google_compute_network.mynetwork.name
     access_config {
