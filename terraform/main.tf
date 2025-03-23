@@ -54,6 +54,7 @@ resource "google_compute_instance" "web-test" {
 
   metadata = {
     "ssh-keys" = "j_naeder324:${file("~/.ssh/gcp-ssh-key.pub")}"
+    "startup-script"  = "sudo apt update\nsudo apt install git -y\n cd /home/j_naeder324\ngit clone https://github.com/JNaeder/k8-test-1.git"
   }
 
   network_interface {
@@ -61,12 +62,4 @@ resource "google_compute_instance" "web-test" {
     access_config {
     }
   }
-
-  # Startup script to write external IP to .env file
-  metadata_startup_script = <<-EOT
-    #!/bin/bash
-    EXTERNAL_IP=$(curl -s http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip -H "Metadata-Flavor: Google")
-    echo "EXTERNAL_IP=$EXTERNAL_IP" > /home/j_naeder324/.env.production
-    chown j_naeder324:j_naeder324 /home/j_naeder324/.env.production
-  EOT
 }
