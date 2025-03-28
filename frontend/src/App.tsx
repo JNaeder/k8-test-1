@@ -29,7 +29,7 @@ function App() {
         <img src={k8Logo} height={100} />
         <h1>k8 Test</h1>
       </div>
-      <p>⚠️currently not running on k8⚠️</p>
+      {/* <p>⚠️currently not running on k8⚠️</p> */}
       <h2>{backendQuote}</h2>
       <h3>
         Status: {backendStatus.toUpperCase()}{" "}
