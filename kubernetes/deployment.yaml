@@ -19,6 +19,7 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
+
 ---
 apiVersion: apps/v1
 kind: Deployment

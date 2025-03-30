@@ -31,8 +31,14 @@ quotes = [
   "With the new day comes new strength and new thoughts."
 ]
 
-
 @app.get("/")
+async def test():
+    return {
+        "message": "This is a test"
+    }
+
+
+@app.get("/api")
 async def root():
     todayDate = datetime.now()
     random_num = random.randint(0, len(quotes) - 1)

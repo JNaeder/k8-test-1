@@ -10,9 +10,10 @@ function App() {
   const [backendQuote, setBackendQuote] = useState<String>("-");
 
   const handleClick = async () => {
-    const backendURL =
-      import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
-    const response = await axios.get(backendURL);
+    const url = `${window.location.protocol}//${window.location.hostname}`;
+    // const backendURL =
+    //   import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+    const response = await axios.get(`${url}/api`);
     const data = response.data;
     const datetime = new Date(data["time"]);
     setBackendDate(datetime.toDateString());
