@@ -1,5 +1,5 @@
 import "./App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import k8Logo from "./assets/k8_logo.svg";
 
@@ -10,9 +10,9 @@ function App() {
   const [backendQuote, setBackendQuote] = useState<String>("-");
 
   const handleClick = async () => {
-    const url = `${window.location.protocol}//${window.location.hostname}`;
-    // const backendURL =
-    //   import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+    const url = `${window.location.protocol}//${window.location.hostname}${
+      import.meta.env.MODE === "production" ? "" : ":8000"
+    }`;
     const response = await axios.get(`${url}/api`);
     const data = response.data;
     const datetime = new Date(data["time"]);
@@ -24,13 +24,16 @@ function App() {
     setBackendQuote(data["quote"]);
   };
 
+  useEffect(() => {
+    handleClick();
+  }, []);
+
   return (
     <>
       <div className="container">
         <img src={k8Logo} height={100} />
         <h1>k8 Test</h1>
       </div>
-      {/* <p>⚠️currently not running on k8⚠️</p> */}
       <h2>{backendQuote}</h2>
       <h3>
         Status: {backendStatus.toUpperCase()}{" "}
@@ -48,6 +51,7 @@ function App() {
       >
         GitHub Repository
       </button>
+      <p>Version 0.0.1</p>
     </>
   );
 }
