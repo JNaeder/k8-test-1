@@ -14,21 +14,26 @@ app.add_middleware(
 )
 
 quotes = [
-  "Believe you can and you're halfway there.",
-  "Do what you can, with what you have, where you are.",
-  "Dream big and dare to fail.",
-  "Stay hungry, stay foolish.",
-  "Success is not final, failure is not fatal.",
-  "You are stronger than you think.",
-  "The only way to do great work is to love what you do.",
-  "Doubt kills more dreams than failure ever will.",
-  "Everything you’ve ever wanted is on the other side of fear.",
-  "Act as if what you do makes a difference. It does.",
-  "Happiness depends upon ourselves.",
-  "What we achieve inwardly will change outer reality.",
-  "Be yourself; everyone else is already taken.",
-  "It always seems impossible until it’s done.",
-  "With the new day comes new strength and new thoughts."
+  "You're surprisingly good at that for a beginner!",
+  "I love how you just don’t care what people think.",
+  "You have such a unique sense of style—I've never seen anything like it!",
+  "Wow, I never expected you to be so articulate!",
+  "You're proof that confidence is more important than talent.",
+  "I wish I had your level of patience with failure.",
+  "It’s amazing how you always find a way to stand out—whether you mean to or not.",
+  "You make being awkward look so natural!",
+  "I admire how you don’t let a lack of experience stop you.",
+  "You have such a refreshingly different way of thinking!",
+  "I love how you embrace your flaws instead of trying to hide them.",
+  "You're really brave for wearing that outfit.",
+  "Your taste in music is... definitely unexpected!",
+  "You have such a charmingly unpolished way of doing things.",
+  "It's inspiring how you never let criticism get to you.",
+  "You’re so independent—it’s impressive how little you rely on common sense.",
+  "I love how you turn every mistake into a learning experience!",
+  "You always manage to surprise me, one way or another.",
+  "It’s great how you don’t let lack of talent hold you back.",
+  "You bring such a different energy to the group—no one else could pull that off!"
 ]
 
 @app.get("/")

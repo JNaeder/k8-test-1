@@ -31,27 +31,23 @@ function App() {
   return (
     <>
       <div className="container">
-        <img src={k8Logo} height={100} />
-        <h1>k8 Test</h1>
+        <img src={k8Logo} height={200} className="k8-logo" />
+        <h1>k8 Test {backendStatus == "online" ? "✅" : "❌"}</h1>
       </div>
-      <h2>{backendQuote}</h2>
-      <h3>
-        Status: {backendStatus.toUpperCase()}{" "}
-        {backendStatus == "online" ? "✅" : "❌"}
-      </h3>
+      <h2 className="quote">{backendQuote}</h2>
       <h3>Date: {backendDate}</h3>
       <h3>Time: {backendTime}</h3>
-      <button onClick={handleClick}>Test Backend</button>
-      <div></div>
-      <br />
-      <button
-        onClick={() => {
-          window.open("https://github.com/JNaeder/k8-test-1", "_blank");
-        }}
-      >
-        GitHub Repository
-      </button>
-      <p>Version 0.0.1</p>
+      <div className="button-container">
+        <button onClick={handleClick}>Refresh</button>
+        <button
+          onClick={() => {
+            window.open("https://github.com/JNaeder/k8-test-1", "_blank");
+          }}
+        >
+          GitHub Repository
+        </button>
+      </div>
+      <p>Version 0.0.2</p>
     </>
   );
 }
