@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: frontend:latest
+          image: us-east1-docker.pkg.dev/gcp-practice-1-453919/my-containers/frontend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: backend:latest
+          image: us-east1-docker.pkg.dev/gcp-practice-1-453919/my-containers/backend:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
