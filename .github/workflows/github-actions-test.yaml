@@ -9,6 +9,7 @@ jobs:
     name: The Main Job Yo
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Testing to see if this works!"
-      - name: Testing Name
-        run: echo "This is a ${{github.event}}"
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: List the files
+        run: ls -la
