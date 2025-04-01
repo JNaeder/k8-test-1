@@ -28,4 +28,4 @@ jobs:
           export TF_VAR_zone=${{ vars.ZONE }}
           export TF_VAR_external_ip=${{ vars.EXTERNAL_IP }}
           export TF_VAR_domain_name=${{ vars.DOMAIN_NAME }}
-          terraform plan
+          terraform apply -auto-approve
