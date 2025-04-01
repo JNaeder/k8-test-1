@@ -10,3 +10,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "Testing to see if this works!"
+      - name: Testing Name
+        run: echo "This is a ${{github.event}}"
