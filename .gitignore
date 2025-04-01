@@ -7,6 +7,7 @@
 terraform.tfstate
 terraform.tfstate.*
 .terraform.tfstate.*
+*.tfvars
 
 # Logs
 logs
