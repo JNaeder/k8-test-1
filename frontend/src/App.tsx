@@ -47,7 +47,7 @@ function App() {
           GitHub Repository
         </button>
       </div>
-      <p>Version 0.0.2</p>
+      <p>Version 0.0.3</p>
     </>
   );
 }

@@ -18,6 +18,10 @@
   gap: 20px;
 }
 
+.k8-logo {
+  animation: logo-spin 5s linear infinite;
+}
+
 .quote {
   background-color: #1a1a1a;
   padding: 20px;

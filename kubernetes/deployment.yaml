@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: us-east1-docker.pkg.dev/gcp-practice-1-453919/my-containers/frontend:324c2f523f46736cc1555c56b2a8859b5d714727
+          image: us-east1-docker.pkg.dev/gcp-practice-1-453919/my-containers/frontend:eed63ad496837fbbb405213bffddcaf4bdf1a862
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: us-east1-docker.pkg.dev/gcp-practice-1-453919/my-containers/backend:324c2f523f46736cc1555c56b2a8859b5d714727
+          image: us-east1-docker.pkg.dev/gcp-practice-1-453919/my-containers/backend:eed63ad496837fbbb405213bffddcaf4bdf1a862
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8000
