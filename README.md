@@ -1,4 +1,17 @@
-# Steps for building
+# Steps for Running Locally
+
+- ## Frontend
+  - `cd` into the `./frontend` folder
+  - Run `npm install` to install all the dependices
+  - Run `npm run dev` to run the development server
+- ## Backend
+  - `cd` into the `./backend` folder
+  - Create a Python virtual environment with `python -m venv venv`
+  - Start the virtual environment with `./venv/Scripts/activate`
+  - Run `pip install -r requirements.txt` to install the dependices
+  - Run `uvicorn main:app --reload` to run the development server
+
+# Steps for Building to Production
 
 _I still have to automate all of this_
 
