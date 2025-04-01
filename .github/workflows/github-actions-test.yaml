@@ -13,3 +13,9 @@ jobs:
         uses: actions/checkout@v4
       - name: List the files
         run: ls -la
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+      - name: Test Terraform
+        run: |
+          terraform init
+          ls -la
