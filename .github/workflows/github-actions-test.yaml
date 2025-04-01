@@ -11,14 +11,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Move to the Terraform directory
+      - name: Setup Terraform Action
+        uses: hashicorp/setup-terraform@v3
+      - name: Run Terraform
         run: |
           cd terraform
           pwd
-          ls -la
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-      - name: Test Terraform
-        run: |
           terraform init
           ls -la
