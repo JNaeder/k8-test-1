@@ -54,7 +54,11 @@ jobs:
           echo "${{ secrets.TLS_CERT }}" | base64 -d > tls.crt
           echo "${{ secrets.TLS_KEY }}" | base64 -d > tls.key
 
-          kubectl create secret tls my-tls-secret --cert=tls.crt --key=tls.key
+          if kubectl get secret my-tls-secret --namespace=default >/dev/null 2>&1; then
+            echo "Secret already exists, skipping creation."
+          else
+            kubectl create secret tls my-tls-secret --cert=tls.crt --key=tls.key --namespace=default
+          fi
       - name: Test Applying Kubernetes
         run: |
           kubectl apply -f ./kubernetes
