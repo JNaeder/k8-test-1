@@ -46,5 +46,6 @@ jobs:
         run: gcloud container clusters get-credentials ${{ vars.CLUSTER_NAME }} --region ${{ vars.REGION }} --project ${{ vars.PROJECT_ID }}
       - name: Test Applying Kubernetes
         run: |
+          pwd
           kubectl apply -f ./kubernetes
           kubectl get all
