@@ -31,5 +31,8 @@ jobs:
       #     terraform apply -auto-approve
       - name: Edit Image Tags
         env:
-          FRONTEND_IMAGE: ${{ vars.ZONE }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/my-containers/frontend:${{ github.sha }}
-        run: echo $FRONTEND_IMAGE
+          FRONTEND_IMAGE: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.CONTAINER_REGISTRY }}/frontend:${{ github.sha }}
+          BACKEND_IMAGE: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.CONTAINER_REGISTRY }}/backend:${{ github.sha }}
+        run: |
+          echo $FRONTEND_IMAGE
+          echo $BACKEND_IMAGE
