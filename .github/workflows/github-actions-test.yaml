@@ -34,6 +34,8 @@ jobs:
           curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
           sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
           kubectl version --client
+      - name: Connect to Cluster
+        run: gcloud container clusters get-credentials ${{ vars.CLUSTER_NAME }} --region ${{ vars.REGION }} --project ${{ vars.PROJECT_ID }}
       - name: Set up Kuberenets Secret
         run: |
           echo "${{ secrets.TLS_CERT }}" | base64 -d > tls.crt
@@ -68,8 +70,6 @@ jobs:
 
           docker push $FRONTEND_IMAGE
           docker push $BACKEND_IMAGE
-      - name: Connect to Cluster
-        run: gcloud container clusters get-credentials ${{ vars.CLUSTER_NAME }} --region ${{ vars.REGION }} --project ${{ vars.PROJECT_ID }}
       - name: Update Image Tag in Deployment
         run: echo "test"
       - name: Applying Kubernetes
