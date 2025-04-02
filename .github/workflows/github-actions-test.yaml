@@ -9,8 +9,8 @@ jobs:
     name: Main
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout code
-      #   uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
       # - name: Setup Terraform Action
       #   uses: hashicorp/setup-terraform@v3
       #   with:
