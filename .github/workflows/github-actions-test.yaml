@@ -11,10 +11,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      # - name: Setup Terraform Action
-      #   uses: hashicorp/setup-terraform@v3
-      #   with:
-      #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      - name: Setup Terraform Action
+        uses: hashicorp/setup-terraform@v3
+        with:
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Setup Google Cloud Auth
         uses: "google-github-actions/auth@v2"
         with:
@@ -24,31 +24,37 @@ jobs:
         with:
           version: ">= 363.0.0"
           install_components: "gke-gcloud-auth-plugin"
-      # - name: Run Terraform
-      #   run: |
-      #     cd terraform
-      #     terraform init
-      #     export TF_VAR_project_id=${{ vars.PROJECT_ID }}
-      #     export TF_VAR_region=${{ vars.REGION }}
-      #     export TF_VAR_zone=${{ vars.ZONE }}
-      #     export TF_VAR_external_ip=${{ vars.EXTERNAL_IP }}
-      #     export TF_VAR_domain_name=${{ vars.DOMAIN_NAME }}
-      #     export TF_VAR_cluster_name=${{ vars.CLUSTER_NAME }}
-      #     terraform apply -auto-approve
-      # - name: Edit Image Tags
-      #   env:
-      #     FRONTEND_IMAGE: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.CONTAINER_REGISTRY }}/frontend:${{ github.sha }}
-      #     BACKEND_IMAGE: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.CONTAINER_REGISTRY }}/backend:${{ github.sha }}
-      #   run: |
-      #     echo $FRONTEND_IMAGE
-      #     echo $BACKEND_IMAGE
-      # - name: Install Kubectl
-      #   run: |
-      #     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-      #     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-      #     kubectl version --client
+      - name: Run Terraform
+        run: |
+          cd terraform
+          terraform init
+          export TF_VAR_project_id=${{ vars.PROJECT_ID }}
+          export TF_VAR_region=${{ vars.REGION }}
+          export TF_VAR_zone=${{ vars.ZONE }}
+          export TF_VAR_external_ip=${{ vars.EXTERNAL_IP }}
+          export TF_VAR_domain_name=${{ vars.DOMAIN_NAME }}
+          export TF_VAR_cluster_name=${{ vars.CLUSTER_NAME }}
+          terraform apply -auto-approve
+      - name: Edit Image Tags
+        env:
+          FRONTEND_IMAGE: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.CONTAINER_REGISTRY }}/frontend:${{ github.sha }}
+          BACKEND_IMAGE: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.CONTAINER_REGISTRY }}/backend:${{ github.sha }}
+        run: |
+          echo $FRONTEND_IMAGE
+          echo $BACKEND_IMAGE
+      - name: Install Kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+          kubectl version --client
       - name: Connect to Cluster
         run: gcloud container clusters get-credentials ${{ vars.CLUSTER_NAME }} --region ${{ vars.REGION }} --project ${{ vars.PROJECT_ID }}
+      - name: Set up Kuberenets Secret
+        run: |
+          echo "${{ secrets.TLS_CERT }}" | base64 -d > tls.crt
+          echo "${{ secrets.TLS_KEY }}" | base64 -d > tls.key
+
+          kubectl create secret tls my-tls-secret --cert=tls.crt --key=tls.key
       - name: Test Applying Kubernetes
         run: |
           kubectl apply -f ./kubernetes
