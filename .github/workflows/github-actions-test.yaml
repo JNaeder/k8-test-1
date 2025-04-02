@@ -77,4 +77,5 @@ jobs:
           cd ./kubernetes
           kustomize edit set image frontend=$FRONTEND_IMAGE
           kustomize edit set image backend=$BACKEND_IMAGE
+          cat kustomization.yaml
           kubectl apply -k .
