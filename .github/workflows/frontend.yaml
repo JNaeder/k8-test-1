@@ -51,5 +51,6 @@ jobs:
           docker build -t $FRONTEND_IMAGE ./frontend
           docker push $FRONTEND_IMAGE
           cd ./kubernetes
+          kustomize edit add resource frontend_deployment.yaml
           kustomize edit set image frontend=$FRONTEND_IMAGE
           kubectl apply -k .

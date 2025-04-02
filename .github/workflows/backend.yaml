@@ -51,5 +51,6 @@ jobs:
           docker build -t $BACKEND_IMAGE ./backend
           docker push $BACKEND_IMAGE
           cd ./kubernetes
+          kustomize edit add resource backend_deployment.yaml
           kustomize edit set image backend=$BACKEND_IMAGE
           kubectl apply -k .
