@@ -19,6 +19,7 @@ variable "external_ip" {}
 variable "region" {}
 variable "zone" {}
 variable "domain_name" {}
+variable "cluster_name" {}
 
 provider "google" {
   project = var.project_id
@@ -45,7 +46,7 @@ resource "google_compute_firewall" "allow-web" {
 }
 
 resource "google_container_cluster" "my-cluster" {
-  name                = "my-cluster"
+  name                = var.cluster_name
   deletion_protection = false
   enable_autopilot    = true
   network             = google_compute_network.mynetwork.name
