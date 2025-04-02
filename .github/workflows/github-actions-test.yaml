@@ -47,5 +47,6 @@ jobs:
       - name: Test Applying Kubernetes
         run: |
           pwd
+          ls -la
           kubectl apply -f ./kubernetes
           kubectl get all
