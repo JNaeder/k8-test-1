@@ -1,9 +1,11 @@
 name: Testing Github Actions!
 run-name: ${{github.actor}} Testing Github Actions!
 on:
-  push:
+  pull_request:
+    types:
+      - closed
     branches:
-      - actions-test
+      - main
 env:
   FRONTEND_IMAGE: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.CONTAINER_REGISTRY }}/frontend:${{ github.sha }}
   BACKEND_IMAGE: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.CONTAINER_REGISTRY }}/backend:${{ github.sha }}
@@ -12,70 +14,72 @@ jobs:
     name: Main
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Set up Docker
-        uses: docker/setup-docker-action@v4
-      - name: Setup Google Cloud Auth
-        uses: "google-github-actions/auth@v2"
-        with:
-          credentials_json: "${{ secrets.GCLOUD_SERVICE_ACCOUNT }}"
-      - name: Set up Cloud SDK
-        uses: "google-github-actions/setup-gcloud@v2"
-        with:
-          version: ">= 363.0.0"
-          install_components: "gke-gcloud-auth-plugin"
-      - name: Setup Terraform Action
-        uses: hashicorp/setup-terraform@v3
-        with:
-          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
-      - name: Install Kubectl
-        run: |
-          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-          kubectl version --client
-      - name: Connect to Cluster
-        run: gcloud container clusters get-credentials ${{ vars.CLUSTER_NAME }} --region ${{ vars.REGION }} --project ${{ vars.PROJECT_ID }}
-      - name: Set up Kuberenets Secret
-        run: |
-          echo "${{ secrets.TLS_CERT }}" | base64 -d > tls.crt
-          echo "${{ secrets.TLS_KEY }}" | base64 -d > tls.key
+      - name: "Testing"
+        run: echo "HELLO"
+      # - name: Checkout code
+      #   uses: actions/checkout@v4
+      # - name: Set up Docker
+      #   uses: docker/setup-docker-action@v4
+      # - name: Setup Google Cloud Auth
+      #   uses: "google-github-actions/auth@v2"
+      #   with:
+      #     credentials_json: "${{ secrets.GCLOUD_SERVICE_ACCOUNT }}"
+      # - name: Set up Cloud SDK
+      #   uses: "google-github-actions/setup-gcloud@v2"
+      #   with:
+      #     version: ">= 363.0.0"
+      #     install_components: "gke-gcloud-auth-plugin"
+      # - name: Setup Terraform Action
+      #   uses: hashicorp/setup-terraform@v3
+      #   with:
+      #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      # - name: Install Kubectl
+      #   run: |
+      #     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+      #     sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+      #     kubectl version --client
+      # - name: Connect to Cluster
+      #   run: gcloud container clusters get-credentials ${{ vars.CLUSTER_NAME }} --region ${{ vars.REGION }} --project ${{ vars.PROJECT_ID }}
+      # - name: Set up Kuberenets Secret
+      #   run: |
+      #     echo "${{ secrets.TLS_CERT }}" | base64 -d > tls.crt
+      #     echo "${{ secrets.TLS_KEY }}" | base64 -d > tls.key
 
-          if kubectl get secret my-tls-secret --namespace=default >/dev/null 2>&1; then
-            echo "Secret already exists, skipping creation."
-          else
-            kubectl create secret tls my-tls-secret --cert=tls.crt --key=tls.key --namespace=default
-          fi
-      - name: Install kustomize
-        run: |
-          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
-          sudo mv kustomize /usr/local/bin/
-          kustomize version  # Verify
-      - name: Run Terraform
-        run: |
-          cd terraform
-          terraform init
-          export TF_VAR_project_id=${{ vars.PROJECT_ID }}
-          export TF_VAR_region=${{ vars.REGION }}
-          export TF_VAR_zone=${{ vars.ZONE }}
-          export TF_VAR_external_ip=${{ vars.EXTERNAL_IP }}
-          export TF_VAR_domain_name=${{ vars.DOMAIN_NAME }}
-          export TF_VAR_cluster_name=${{ vars.CLUSTER_NAME }}
-          terraform apply -auto-approve
-      - name: Build and Push Images
-        run: |
-          gcloud auth configure-docker us-east1-docker.pkg.dev
-          docker build -t $FRONTEND_IMAGE ./frontend
-          docker build -t $BACKEND_IMAGE ./backend
+      #     if kubectl get secret my-tls-secret --namespace=default >/dev/null 2>&1; then
+      #       echo "Secret already exists, skipping creation."
+      #     else
+      #       kubectl create secret tls my-tls-secret --cert=tls.crt --key=tls.key --namespace=default
+      #     fi
+      # - name: Install kustomize
+      #   run: |
+      #     curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+      #     sudo mv kustomize /usr/local/bin/
+      #     kustomize version  # Verify
+      # - name: Run Terraform
+      #   run: |
+      #     cd terraform
+      #     terraform init
+      #     export TF_VAR_project_id=${{ vars.PROJECT_ID }}
+      #     export TF_VAR_region=${{ vars.REGION }}
+      #     export TF_VAR_zone=${{ vars.ZONE }}
+      #     export TF_VAR_external_ip=${{ vars.EXTERNAL_IP }}
+      #     export TF_VAR_domain_name=${{ vars.DOMAIN_NAME }}
+      #     export TF_VAR_cluster_name=${{ vars.CLUSTER_NAME }}
+      #     terraform apply -auto-approve
+      # - name: Build and Push Images
+      #   run: |
+      #     gcloud auth configure-docker us-east1-docker.pkg.dev
+      #     docker build -t $FRONTEND_IMAGE ./frontend
+      #     docker build -t $BACKEND_IMAGE ./backend
 
-          docker push $FRONTEND_IMAGE
-          docker push $BACKEND_IMAGE
-      - name: Update Image Tag in Deployment
-        run: echo "test"
-      - name: Applying Kubernetes
-        run: |
-          cd ./kubernetes
-          kustomize edit set image frontend=$FRONTEND_IMAGE
-          kustomize edit set image backend=$BACKEND_IMAGE
-          cat kustomization.yaml
-          kubectl apply -k .
+      #     docker push $FRONTEND_IMAGE
+      #     docker push $BACKEND_IMAGE
+      # - name: Update Image Tag in Deployment
+      #   run: echo "test"
+      # - name: Applying Kubernetes
+      #   run: |
+      #     cd ./kubernetes
+      #     kustomize edit set image frontend=$FRONTEND_IMAGE
+      #     kustomize edit set image backend=$BACKEND_IMAGE
+      #     cat kustomization.yaml
+      #     kubectl apply -k .
