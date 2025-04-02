@@ -25,13 +25,15 @@ jobs:
         with:
           version: ">= 363.0.0"
           install_components: "gke-gcloud-auth-plugin"
-      - name: Build and Push Images
-        run: |
-          docker build -t $FRONTEND_IMAGE ./frontend
-          docker build -t $BACKEND_IMAGE ./backend
+      - name: test creds
+        run: gcloud auth list
+      # - name: Build and Push Images
+      #   run: |
+      #     docker build -t $FRONTEND_IMAGE ./frontend
+      #     docker build -t $BACKEND_IMAGE ./backend
 
-          docker push $FRONTEND_IMAGE
-          docker push $BACKEND_IMAGE
+      #     docker push $FRONTEND_IMAGE
+      #     docker push $BACKEND_IMAGE
       # - name: Setup Terraform Action
       #   uses: hashicorp/setup-terraform@v3
       #   with:
