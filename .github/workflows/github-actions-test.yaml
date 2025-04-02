@@ -3,7 +3,7 @@ run-name: ${{github.actor}} Testing Github Actions!
 on:
   push:
     branches:
-      - actions-test
+      - main
 env:
   FRONTEND_IMAGE: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.CONTAINER_REGISTRY }}/frontend:${{ github.sha }}
   BACKEND_IMAGE: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.CONTAINER_REGISTRY }}/backend:${{ github.sha }}
