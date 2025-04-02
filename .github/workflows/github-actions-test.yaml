@@ -32,6 +32,7 @@ jobs:
       #     gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://${{ vars.REGION }}-docker.pkg.dev
       - name: Build and Push Images
         run: |
+          gcloud auth configure-docker us-east1-docker.pkg.dev
           docker build -t $FRONTEND_IMAGE ./frontend
           docker build -t $BACKEND_IMAGE ./backend
 
