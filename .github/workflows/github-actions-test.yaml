@@ -6,7 +6,7 @@ on:
       - actions-test
 jobs:
   main-job:
-    name: The Main Job Yo
+    name: Main
     runs-on: ubuntu-latest
     steps:
       # - name: Checkout code
@@ -30,4 +30,6 @@ jobs:
       #     export TF_VAR_domain_name=${{ vars.DOMAIN_NAME }}
       #     terraform apply -auto-approve
       - name: Edit Image Tags
-        run: echo ${{ github.sha }}
+        env:
+          FRONTEND_IMAGE: ${{ vars.ZONE }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/my-containers/frontend:${{ github.sha }}
+        run: echo $FRONTEND_IMAGE
