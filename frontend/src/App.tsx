@@ -34,7 +34,7 @@ function App() {
     <>
       <div className="container">
         <img src={k8Logo} height={200} className="k8-logo" />
-        <h1>k8 Test {backendStatus == "online" ? "✅" : "❌"}</h1>
+        <h1>Kubernetes Test</h1>
       </div>
       <div className="container">
         <h2 className="quote">{backendQuote}</h2>
@@ -42,19 +42,20 @@ function App() {
           <img src={refreshIcon} height={30} className="refresh-logo" />
         </button>
       </div>
-      <h3>Date: {backendDate}</h3>
-      <h3>Time: {backendTime}</h3>
+      <h3>
+        {backendTime} {backendDate}
+      </h3>
       <button
         onClick={() => {
           window.open("https://github.com/JNaeder/k8-test-1", "_blank");
         }}
       >
         <div className="button-container">
-          <img src={githubIcon} height={50} className="github-logo" />
+          <img src={githubIcon} height={30} className="github-logo" />
           GitHub Repository
         </div>
       </button>
-      <p>Version 0.1.2</p>
+      <p>Version 0.1.3</p>
       <p>By John Naeder</p>
     </>
   );
