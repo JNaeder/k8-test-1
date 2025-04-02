@@ -26,7 +26,9 @@ jobs:
           version: ">= 363.0.0"
           install_components: "gke-gcloud-auth-plugin"
       - name: test creds
-        run: gcloud auth list
+        run: |
+          gcloud auth list
+          gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://${{ vars.REGION }}-docker.pkg.dev
       # - name: Build and Push Images
       #   run: |
       #     docker build -t $FRONTEND_IMAGE ./frontend
