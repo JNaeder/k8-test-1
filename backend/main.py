@@ -14,26 +14,26 @@ app.add_middleware(
 )
 
 quotes = [
-  "You're surprisingly good at that for a beginner!",
-  "I love how you just don’t care what people think.",
-  "You have such a unique sense of style—I've never seen anything like it!",
-  "Wow, I never expected you to be so articulate!",
-  "You're proof that confidence is more important than talent.",
-  "I wish I had your level of patience with failure.",
-  "It’s amazing how you always find a way to stand out—whether you mean to or not.",
-  "You make being awkward look so natural!",
-  "I admire how you don’t let a lack of experience stop you.",
-  "You have such a refreshingly different way of thinking!",
-  "I love how you embrace your flaws instead of trying to hide them.",
-  "You're really brave for wearing that outfit.",
-  "Your taste in music is... definitely unexpected!",
-  "You have such a charmingly unpolished way of doing things.",
-  "It's inspiring how you never let criticism get to you.",
-  "You’re so independent—it’s impressive how little you rely on common sense.",
-  "I love how you turn every mistake into a learning experience!",
-  "You always manage to surprise me, one way or another.",
-  "It’s great how you don’t let lack of talent hold you back.",
-  "You bring such a different energy to the group—no one else could pull that off!"
+    "Kubernetes is the Linux of the cloud.",
+    "The best way to predict the future is to deploy it.",
+    "Kubernetes doesn’t just run containers, it orchestrates possibilities.",
+    "With Kubernetes, you’re not just deploying apps—you’re scaling dreams.",
+    "Automation is the first step towards reliability, and Kubernetes is the engine.",
+    "Kubernetes: Where 'it works on my machine' finally meets 'it works everywhere.'",
+    "In a world of microservices, Kubernetes is the conductor of the symphony.",
+    "Kubernetes turns infrastructure into code, and ops into innovation.",
+    "Containers are the present, Kubernetes is the future.",
+    "Kubernetes teaches us that resilience isn’t optional—it’s designed.",
+    "The cloud is just someone else’s computer, but Kubernetes makes it yours.",
+    "Kubernetes: Because manually scaling applications is so 2010.",
+    "Failures will happen. Kubernetes ensures they don’t take you down.",
+    "Kubernetes is not just a tool—it’s a mindset of scalability and resilience.",
+    "The only thing better than automation is self-healing automation. Thank you, K8s.",
+    "Kubernetes is the bridge between developers and the infinite cloud.",
+    "With great scalability comes great responsibility—Kubernetes helps you handle it.",
+    "Kubernetes: Because 'works in production' should be the default, not the exception.",
+    "If containers are the ships, Kubernetes is the global shipping network.",
+    "Kubernetes doesn’t eliminate complexity—it tames it."
 ]
 
 @app.get("/")
