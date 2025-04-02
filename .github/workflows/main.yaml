@@ -70,4 +70,4 @@ jobs:
       - name: Applying Kubernetes
         run: |
           cd ./kubernetes
-          kubectl apply -f ./services
+          kubectl apply -f services.yaml
