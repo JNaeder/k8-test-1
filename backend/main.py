@@ -33,7 +33,8 @@ quotes = [
     "With great scalability comes great responsibility—Kubernetes helps you handle it.",
     "Kubernetes: Because 'works in production' should be the default, not the exception.",
     "If containers are the ships, Kubernetes is the global shipping network.",
-    "Kubernetes doesn’t eliminate complexity—it tames it."
+    "Kubernetes doesn’t eliminate complexity—it tames it.",
+    "This is my quote. k8 kicks ass"
 ]
 
 @app.get("/")
