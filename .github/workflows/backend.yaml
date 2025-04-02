@@ -1,0 +1,55 @@
+name: Frontend
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+    paths:
+      - "backend/**"
+env:
+  BACKEND_IMAGE: ${{ vars.REGION }}-docker.pkg.dev/${{ vars.PROJECT_ID }}/${{ vars.CONTAINER_REGISTRY }}/backend:${{ github.sha }}
+jobs:
+  build-and-push-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-docker-action@v4
+
+      - name: Setup Google Cloud Auth
+        uses: "google-github-actions/auth@v2"
+        with:
+          credentials_json: "${{ secrets.GCLOUD_SERVICE_ACCOUNT }}"
+
+      - name: Set up Cloud SDK
+        uses: "google-github-actions/setup-gcloud@v2"
+        with:
+          version: ">= 363.0.0"
+          install_components: "gke-gcloud-auth-plugin"
+
+      - name: Install Kubectl
+        run: |
+          curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+          sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+          kubectl version --client
+
+      - name: Connect to GKE Cluster
+        run: gcloud container clusters get-credentials ${{ vars.CLUSTER_NAME }} --region ${{ vars.REGION }} --project ${{ vars.PROJECT_ID }}
+
+      - name: Install kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
+          kustomize version  # Verify
+
+      - name: Build and Push Backend
+        run: |
+          gcloud auth configure-docker us-east1-docker.pkg.dev
+          docker build -t $BACKEND_IMAGE ./backend
+          docker push $BACKEND_IMAGE
+          cd ./kubernetes
+          kustomize edit set image backend=$BACKEND_IMAGE
+          kubectl apply -k .
