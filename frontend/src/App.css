@@ -15,11 +15,22 @@
 .button-container {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  align-items: center;
+  gap: 10px;
 }
 
 .k8-logo {
   animation: logo-spin 5s linear infinite;
+}
+
+.github-logo {
+  filter: brightness(100%) saturate(100%) invert(100%) sepia(0%) saturate(0%)
+    hue-rotate(300deg);
+}
+
+.refresh-logo {
+  filter: brightness(100%) saturate(100%) invert(100%) sepia(0%) saturate(0%)
+    hue-rotate(300deg);
 }
 
 .quote {
