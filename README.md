@@ -41,3 +41,13 @@ _I still have to automate all of this_
   - Once the Ingress service finishes, grab the external IP
   - Add that IP to the **external_ip** variable in the `terraform.tfvars` file
   - Run `terraform apply -auto-approve` again
+
+# Steps for Automation
+
+- Use a Linux runner machine provided by Github
+- Checkout the repo
+- Setup Terraform
+  - Need to host the state somewhere, I'm using Terraform Cloud
+  - Authorize Terraform Cloud with an API Key Via Github Actions
+  - In Terraform Cloud, add the Google Service Account credentials to authorize the running of the Terraform stuff
+  - Put all of the variables in GitHub Actions variables/secrets, run them in the CLI so they are available to Terraform

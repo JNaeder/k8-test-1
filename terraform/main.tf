@@ -26,30 +26,30 @@ provider "google" {
   zone    = var.zone
 }
 
-# resource "google_compute_network" "mynetwork" {
-#   name                    = "mynetwork"
-#   auto_create_subnetworks = true
-# }
+resource "google_compute_network" "mynetwork" {
+  name                    = "mynetwork"
+  auto_create_subnetworks = true
+}
 
 
-# resource "google_compute_firewall" "allow-web" {
-#   name          = "allow-web"
-#   network       = google_compute_network.mynetwork.name
-#   description   = "Allow Web Traffic"
-#   source_ranges = ["0.0.0.0/0"]
+resource "google_compute_firewall" "allow-web" {
+  name          = "allow-web"
+  network       = google_compute_network.mynetwork.name
+  description   = "Allow Web Traffic"
+  source_ranges = ["0.0.0.0/0"]
 
-#   allow {
-#     protocol = "tcp"
-#     ports    = ["80", "443"]
-#   }
-# }
+  allow {
+    protocol = "tcp"
+    ports    = ["80", "443"]
+  }
+}
 
-# resource "google_container_cluster" "my-cluster" {
-#   name                = "my-cluster"
-#   deletion_protection = false
-#   enable_autopilot    = true
-#   network             = google_compute_network.mynetwork.name
-# }
+resource "google_container_cluster" "my-cluster" {
+  name                = "my-cluster"
+  deletion_protection = false
+  enable_autopilot    = true
+  network             = google_compute_network.mynetwork.name
+}
 
 resource "google_dns_managed_zone" "audiobytes-zone" {
   name        = "audiobytes"
