@@ -27,6 +27,7 @@ jobs:
           install_components: "gke-gcloud-auth-plugin"
       - name: test creds
         run: |
+          gcloud projects get-iam-policy ${{ vars.PROJECT_ID }} --format=json | jq '.bindings[] | select(.role=="roles/artifactregistry.writer")'
           gcloud auth list
           gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://${{ vars.REGION }}-docker.pkg.dev
       # - name: Build and Push Images
