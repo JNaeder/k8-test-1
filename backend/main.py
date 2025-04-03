@@ -38,6 +38,12 @@ quotes = [
     "This is my quote. k8 kicks ass"
 ]
 
+@app.get("/")
+async def test():
+    return {
+        "message": "This is a test"
+    }
+
 @app.get("/api")
 async def root():
     est_time_zone = pytz.timezone("America/New_York")
