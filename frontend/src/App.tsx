@@ -6,7 +6,7 @@ import refreshIcon from "./assets/refresh_icon.svg";
 import githubIcon from "./assets/github_icon.svg";
 
 function App() {
-  const [backendStatus, setBackendStatus] = useState<String>("");
+  // const [backendStatus, setBackendStatus] = useState<String>("");
   const [backendDate, setBackendDate] = useState<String>("-");
   const [backendTime, setBackendTime] = useState<String>("-");
   const [backendQuote, setBackendQuote] = useState<String>("-");
@@ -22,7 +22,7 @@ function App() {
     setBackendTime(
       `${datetime.getHours()}:${datetime.getMinutes()}:${datetime.getSeconds()}`
     );
-    setBackendStatus(data["status"]);
+    // setBackendStatus(data["status"]);
     setBackendQuote(data["quote"]);
   };
 
