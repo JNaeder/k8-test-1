@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
+import pytz
 import random
 
 app = FastAPI()
@@ -37,21 +38,15 @@ quotes = [
     "This is my quote. k8 kicks ass"
 ]
 
-@app.get("/")
-async def test():
-    return {
-        "message": "This is a test"
-    }
-
-
 @app.get("/api")
 async def root():
-    todayDate = datetime.now()
+    est_time_zone = pytz.timezone("America/New_York")
+    todayDate = datetime.now(est_time_zone)
     random_num = random.randint(0, len(quotes) - 1)
     return {
         "status": "online",
         "time": todayDate,
-        "quote": quotes[random_num]
+        "quote": quotes[random_num],
     }
 
 

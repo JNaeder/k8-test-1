@@ -22,7 +22,6 @@ function App() {
     setBackendTime(
       `${datetime.getHours()}:${datetime.getMinutes()}:${datetime.getSeconds()}`
     );
-    // setBackendStatus(data["status"]);
     setBackendQuote(data["quote"]);
   };
 
@@ -33,7 +32,7 @@ function App() {
   return (
     <>
       <div className="container">
-        <img src={k8Logo} height={200} className="k8-logo" />
+        <img src={k8Logo} height={100} className="k8-logo" />
         <h1>Kubernetes Test</h1>
       </div>
       <div className="container">
@@ -55,7 +54,7 @@ function App() {
           GitHub Repository
         </div>
       </button>
-      <p>Version 0.1.3</p>
+      <p>Version 0.1.4</p>
       <p>By John Naeder</p>
     </>
   );
