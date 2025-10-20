@@ -54,7 +54,7 @@ function App() {
           GitHub Repository
         </div>
       </button>
-      <p>Version 0.1.5</p>
+      <p>Version 0.1.5b</p>
       <p>By John Naeder</p>
     </>
   );
